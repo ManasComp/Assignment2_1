@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Assignment2_1.Views.QuotesPage"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:viewModels="clr-namespace:Assignment2_1.ViewModels;assembly=Assignment2_1"
+             ios:Page.UseSafeArea="True">
+    <!-- you can write here Padding=“20”, but because it is set down, it is not necessary to be here (JetBrains Rider even detects that as issue)> -->
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <OnPlatform.Platforms>
+                <On Platform="iOS" Value="20"/>
+                <On Platform="UWP" Value="20, 40, 20, 20"/>
+                <On Platform="Android" Value="20, 30, 20, 20"/>
+            </OnPlatform.Platforms>
+         </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.BindingContext>
+        <viewModels:QuotesViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Text="Next" Command="{Binding NextQuoteCommand}" HorizontalOptions="Center" Grid.Row="0"/>
+            <Label VerticalOptions="Center" HorizontalOptions="Start"  Grid.Row="1">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <FormattedString.Spans>
+                            <Span Text="Font size: "/>
+                            <Span Text="{Binding Source={x:Reference FontSize_Slider}, Path= Value, StringFormat='{0:N0}'}"/>
+                        </FormattedString.Spans>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Slider x:Name="FontSize_Slider" Maximum="50" Minimum="16" Value="16"  Grid.Row="2"/>
+            <Label Text="{Binding ActualQuote}"
+                   FontSize="{Binding Source={x:Reference FontSize_Slider}, Path= Value}" Grid.Row="3"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
